@@ -2,14 +2,13 @@ terraform {
   required_version = "~> 0.14"
   backend "gcs" {
     bucket = "bucket-tf"
-    prefix = "state/rundeck/dev/dev-rundeck/"
+    prefix = "state/rundeck/test/test-rundeck/"
   }
 }
 
 variable "rundeck_token" {
   default = ""
 }
-
 
 module "rundeck" {
   source = "../../module/rundeck-module/"
@@ -30,7 +29,7 @@ module "rundeck" {
   cleanup_batch                  = "2000"
   cleanup_keep_days              = "30"
   cleanup_retention_minimum      = "20"
-  cleanup_schedule               = "0 0 0 1/1 * ? *"
+  cleanup_schedule               = "0 0 0 1/1 * ? *" # --> scheduler time for clean up execution history
 
   # JOB USING INLINE SCRIPT
   rundeck_jobs_inline = [
